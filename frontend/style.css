@@ -1,0 +1,56 @@
+#top {
+	background-color: #0a0300;
+	padding-left: 20%;
+	padding-right: 20%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	text-align: center;
+	color: white;
+}
+
+#regform {
+	margin-left: 30%;
+	margin-right: 30%;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-top: 5%;
+	padding-bottom: 3%;
+	color: white;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #e4eae8;
+	border-bottom-left-radius: 5%;
+	border-bottom-right-radius: 5%;
+	background-color: #0e0d08;
+}
+
+#button {
+	display: block;
+ 	margin: auto;
+ 	margin-top: 5%;
+ 	padding-left: 4%;
+ 	padding-right: 4%;
+}
+
+body {
+	background-color: #061609;
+	color: white;
+}
+
+#ref {
+	padding-left: 20%;
+	padding-right: 20%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	text-align: center;
+}
+
+#pb {
+	float: right;
+	margin: auto;
+}
+
+#pa {
+	float: right;
+	margin: auto;
+}
