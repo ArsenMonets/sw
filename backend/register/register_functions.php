@@ -43,17 +43,17 @@ function create_user_with_check($data) {
 }
 
 function is_unique_login($login) {
-    $query = "SELECT COUNT(*) AS count FROM users WHERE login = '$login'";
-    $result = read($query);
+    $query = "SELECT COUNT(*) AS count FROM users WHERE login = ?";
+    $result = read($query, [$login]);
     if (!empty($result)) {
         return $result[0]['count'] == 0;
-    } 
-    return false; 
+    }
+    return false;
 }
 
 function create_user($data) {
 	$login = $data['login'];
-	$password = password_hash($data['password'], PASSWORD_BCRYPT);
-	$query = "INSERT INTO users (login, password) VALUES ('$login', '$password')";
-	create($query);
+    $password = password_hash($data['password'], PASSWORD_BCRYPT);
+    $query = "INSERT INTO users (login, password) VALUES (?, ?)";
+    return create($query, [$login, $password]);
 }

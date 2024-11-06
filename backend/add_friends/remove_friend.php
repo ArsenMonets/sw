@@ -15,15 +15,11 @@ if (empty($friendLogin)) {
     exit;
 }
 
-if (isUserFriend($_SESSION['id'], $friendLogin)) {
-    echo json_encode(['success' => false, 'message' => 'Friend is already added.']);
-    exit;
-}
+$removed = removeFriendFromDatabase($_SESSION['id'], $friendLogin);
 
-$added = addFriendToDatabase($_SESSION['id'], $friendLogin); 
-
-if ($added) {
+if ($removed) {
     echo json_encode(['success' => true]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Failed to add friend.']);
+    echo json_encode(['success' => false, 'message' => 'Failed to remove friend.']);
 }
+?>

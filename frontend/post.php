@@ -1,9 +1,9 @@
 <?php
     $inf;
-    include("../backend/post/post_actions.php");
+    include("../backend/posts/post_actions.php");
     $er="";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        include("../backend/post/add_post.php");
+        include("../backend/posts/add_post.php");
     }
 ?>
 
@@ -18,7 +18,7 @@
     <div id = "top">
         <h2> You can post there </h2>
     </div>
-    <div id="regform">
+    <div id="form">
         <h3>Add a Post</h3>
             <form action="post.php" method="post">
                 <?php if ($er): ?>

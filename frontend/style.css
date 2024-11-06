@@ -3,12 +3,12 @@
 	padding-left: 20%;
 	padding-right: 20%;
 	padding-top: 2%;
-	padding-bottom: 2%;
+	padding-bottom: 5%;
 	text-align: center;
 	color: white;
 }
 
-#regform {
+#form {
 	margin-left: 30%;
 	margin-right: 30%;
 	padding-left: 1%;
@@ -45,12 +45,12 @@ body {
 	text-align: center;
 }
 
-#pb {
+#pb, #pa {
 	float: right;
 	margin: auto;
 }
 
-#pa {
-	float: right;
+#btnReload, #btnAllPosts, #btnFriendsPosts, #btnMyPosts {
+	float: left;
 	margin: auto;
 }

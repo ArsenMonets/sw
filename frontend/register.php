@@ -16,7 +16,7 @@
 	<div id = "top">
 		<h2>Registration</h2>
 	</div>
-	<form id = "regform" action = "register.php" method = "post">
+	<form id = "form" action = "register.php" method = "post">
 		<?php if ($er): ?>
 			<div class="alert alert-danger" role="alert">
         		<?php echo $er; ?>
