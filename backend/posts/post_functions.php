@@ -22,37 +22,37 @@ function addPost($data) {
     $post_content = $data['post_content'];
 
     $query = "INSERT INTO posts (userid, top, text) VALUES (?, ?, ?)";
-    create($query, [$userid, $post_title, $post_content]);
 
-    return false;
+    return !create($query, [$userid, $post_title, $post_content]);
 }
 
 
 function getPostsFromFriends($id) {
     $query = "
-        SELECT users.login, posts.top, posts.text
+        SELECT posts.id, users.login, posts.top, posts.text, posts.likes, isUserLike(?, posts.id) AS is_user_like
         FROM posts
         INNER JOIN users ON users.id = posts.userid
         WHERE isUserFriend(?, posts.userid) = TRUE
     ";
 
-    return read($query, [$id]);
+    return read($query, [$id, $id]);
 }
 
 function getAllPosts($id) {
     $query = "
-        SELECT users.login, posts.top, posts.text 
+        SELECT posts.id, users.login, posts.top, posts.text,
+            posts.likes, isUserLike(?, posts.id) AS is_user_like
         FROM posts 
         INNER JOIN users ON users.id = posts.userid
         WHERE posts.userid != ?
     ";
 
-    return read($query, [$id]);
+    return read($query, [$id, $id]);
 }
 
 function getPostsFromUser($id) {
     $query = "
-        SELECT posts.id, users.login, posts.top, posts.text
+        SELECT posts.id, users.login, posts.top, posts.text, posts.likes
         FROM posts
         INNER JOIN users ON users.id = posts.userid
         WHERE posts.userid = ?
@@ -69,6 +69,24 @@ function checkIfPostOwnedByUser($userId, $postId) {
 function removePostFromDatabase($postId) {
     $query = "DELETE FROM posts WHERE id = ?";
     return delete($query, [$postId]);
+}
+
+function getPostById($postId) {
+    $query = "SELECT top, text FROM posts WHERE id = ?";
+    $params = [$postId]; 
+    $result = read($query, $params);
+    
+    if (count($result) > 0) {
+        return $result[0]; 
+    }
+    return false;
+}
+
+function updatePost($postId, $title, $content) {
+    $query = "UPDATE posts SET top = ?, text = ? WHERE id = ?";
+    $params = [$title, $content, $postId]; 
+    $result = update($query, $params);
+    return $result; 
 }
 
 ?>
