@@ -1,7 +1,5 @@
 function addFriend(friendLogin) {
-    fetch(`../backend/add_friends/add_friend.php?friend=${encodeURIComponent(friendLogin)}`, {
-        method: 'POST'
-    })
+    fetch(`../backend/add_friends/add_friend.php?friend=${encodeURIComponent(friendLogin)}`)
     .then(response => response.json())
     .then(data => {
         if (!data.success) {
@@ -11,21 +9,17 @@ function addFriend(friendLogin) {
     .catch(error => console.error('Error adding friend:', error));
 }
 
-function removePost(postId) {
-    fetch(`../backend/posts/remove_post.php?post_id=${encodeURIComponent(postId)}`, {
-        method: 'POST',
-    })
+function removeFriend(friendLogin) {
+    fetch(`../backend/add_friends/remove_friend.php?friend=${encodeURIComponent(friendLogin)}`)
     .then(response => response.json())
     .then(data => {
         if (!data.success) {
-            alert(`Error removing post: ${data.message}`);
-        } else {
-            fetchPosts(current_type); 
+            alert(`Error removing friend: ${data.message}`);
         }
     })
     .catch(error => {
-        console.error('Error removing post:', error);
-        alert('There was an error removing the post.');
+        console.error('Error removing friend:', error);
+        alert('There was an error removing the friend.');
     });
 }
 

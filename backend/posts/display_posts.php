@@ -14,19 +14,19 @@ $posts = [];
 
 switch ($type) {
     case 'my':
-        $posts = getPostsFromUser($_SESSION['id']);
+        $posts = get_posts_from_user($_SESSION['id']);
         break;
 
     case 'friends':
-        $posts = getPostsFromFriends($_SESSION['id']);
+        $posts = get_posts_from_friends($_SESSION['id']);
         break;
 
     case 'all':
-        $posts = getAllPosts($_SESSION['id']);
+        $posts = get_all_posts($_SESSION['id']);
         break;
 
     default:
-        $posts = getAllPosts($_SESSION['id']);
+        $posts = get_all_posts($_SESSION['id']);
         break;
 }
 

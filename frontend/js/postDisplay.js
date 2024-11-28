@@ -1,6 +1,7 @@
 current_type = 'all'
 
 function fetchPosts(type = 'all') {
+    current_type = type;
     fetch(`../backend/posts/display_posts.php?type=${encodeURIComponent(type)}`)
         .then(response => response.json())
         .then(data => {
@@ -19,9 +20,11 @@ function fetchPosts(type = 'all') {
                     postTitle.textContent = post.top;
                     postContent.appendChild(postTitle);
                     
-                    const postText = document.createElement('p');
+                    const postPar = document.createElement('p');
+                    const postText = document.createElement('pre');
                     postText.textContent = post.text;
-                    postContent.appendChild(postText);
+                    postPar.appendChild(postText);
+                    postContent.appendChild(postPar);
                     
                     const postAuthor = document.createElement('small');
                     postAuthor.textContent = `Posted by: ${post.login}`;
@@ -46,18 +49,26 @@ function fetchPosts(type = 'all') {
                         deleteButton.textContent = 'Delete';
                         deleteButton.addEventListener('click', () => {
                             removePost(post.id);
-                            fetchPosts(type);
                         });
                         actionButtons.appendChild(deleteButton);
 
                         actionButtons.className = 'action-buttons d-flex gap-2'; 
                     } else {
                         const likeButton = document.createElement('button');
-                        likeButton.className = 'btn btn-outline-success btn-sm';
-                        likeButton.textContent = 'Like';
+                        if (post.is_user_like) {
+                            likeButton.className = 'btn btn-outline-danger btn-sm';  
+                            likeButton.textContent = 'Unlike';
+                        } else {
+                            likeButton.className = 'btn btn-outline-success btn-sm';  
+                            likeButton.textContent = 'Like';            
+                        }
+                        
                         likeButton.addEventListener('click', () => {
-                            likePost(post.login);
-                            fetchPosts(type); 
+                            if (post.is_user_like) {
+                                unlikePost(post.id);
+                            } else {
+                                likePost(post.id);
+                            }
                         });
                         actionButtons.appendChild(likeButton);
                     }
@@ -65,21 +76,41 @@ function fetchPosts(type = 'all') {
                     postItem.appendChild(actionButtons);
                     
                     postsList.appendChild(postItem);
+
+                    const likeCount = document.createElement('span');
+                    likeCount.className = 'like-count';
+                    likeCount.textContent = `Likes: ${post.likes}`; 
+                    actionButtons.appendChild(likeCount);
                 });
             }
         })
         .catch(error => console.error('Error fetching posts:', error));
-    current_type = type;
 }
 
-
-function likePost(postLogin) {
-    fetch(`../backend/posts/like_post.php?login=${encodeURIComponent(postLogin)}`)
+function likePost(postId) {
+    fetch(`../backend/posts/likes/like_post.php?id=${postId}`)
         .then(response => response.json())
         .then(data => {
-            console.log('Post liked:', data);
+            if (!data.success) {
+                console.error('Error liking post:', data);
+            } else {
+                fetchPosts(current_type);
+            }
         })
         .catch(error => console.error('Error liking post:', error));
+}
+
+function unlikePost(postId) {
+    fetch(`../backend/posts/likes/unlike_post.php?id=${postId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                console.error('Error unliking post:', data);
+            } else {
+                fetchPosts(current_type);
+            }
+        })
+        .catch(error => console.error('Error unliking post:', error));
 }
 
 document.getElementById('btnAllPosts').addEventListener('click', () => {
@@ -99,9 +130,7 @@ document.getElementById('btnReload').addEventListener('click', () => {
 });
 
 function removePost(postId) {
-    fetch(`../backend/posts/delete_post.php?post_id=${encodeURIComponent(postId)}`, {
-        method: 'POST',
-    })
+    fetch(`../backend/posts/delete_post.php?post_id=${encodeURIComponent(postId)}`)
     .then(response => response.json())
     .then(data => {
         if (!data.success) {
@@ -117,30 +146,9 @@ function removePost(postId) {
 }
 
 function editPost(postId) {
-    const newTitle = prompt('Enter new title:');
-    const newText = prompt('Enter new text:');
-
-    if (newTitle && newText) {
-        fetch(`../backend/posts/edit_post.php`, {
-            method: 'POST',
-            body: JSON.stringify({ id: postId, top: newTitle, text: newText }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Post updated successfully');
-                fetchPosts(current_type);  
-            } else {
-                alert('Error updating post');
-            }
-        })
-        .catch(error => console.error('Error updating post:', error));
-    } else {
-        alert('Title and text cannot be empty');
-    }
+    const url = `edit_post.php?postId=${encodeURIComponent(postId)}`;
+    window.location.assign(url);
 }
+
 
 fetchPosts(current_type);

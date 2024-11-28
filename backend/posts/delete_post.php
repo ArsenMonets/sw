@@ -14,14 +14,14 @@ if (empty($postId)) {
     exit;
 }
 
-$owned = checkIfPostOwnedByUser($_SESSION['id'], $postId); 
+$owned = check_if_post_owned_by_user($_SESSION['id'], $postId); 
 
 if (!$owned) {
     echo json_encode(['success' => false, 'message' => 'You do not own this post.']);
     exit;
 }
 
-$removed = removePostFromDatabase($postId);
+$removed = remove_post_from_database($postId);
 
 if ($removed) {
     echo json_encode(['success' => true]);

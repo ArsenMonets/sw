@@ -15,15 +15,17 @@ if (empty($friendLogin)) {
     exit;
 }
 
-if (isUserFriend($_SESSION['id'], $friendLogin)) {
+if (is_user_friend($_SESSION['id'], $friendLogin)) {
     echo json_encode(['success' => false, 'message' => 'Friend is already added.']);
     exit;
 }
 
-$added = addFriendToDatabase($_SESSION['id'], $friendLogin); 
+$added = add_friend_to_database($_SESSION['id'], $friendLogin); 
 
 if ($added) {
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Failed to add friend.']);
 }
+
+?>

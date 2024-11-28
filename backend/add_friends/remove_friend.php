@@ -15,7 +15,7 @@ if (empty($friendLogin)) {
     exit;
 }
 
-$removed = removeFriendFromDatabase($_SESSION['id'], $friendLogin);
+$removed = remove_friend_from_database($_SESSION['id'], $friendLogin);
 
 if ($removed) {
     echo json_encode(['success' => true]);

@@ -54,3 +54,10 @@ body {
 	float: left;
 	margin: auto;
 }
+
+pre {
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    overflow: hidden; 
+    max-width: 100%; 
+}

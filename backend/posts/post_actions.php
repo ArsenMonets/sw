@@ -1,5 +1,5 @@
 <?php
 
-include("../backend/profile/profile_actions.php");
+include(dirname(__DIR__) . "/profile/profile_actions.php");
 
 ?>

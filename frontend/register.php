@@ -24,6 +24,8 @@
     	<?php endif; ?>
 		<label for="login">Enter your login: </label>
 		<input type="text" class="form-control" name="login" placeholder="Login" required>
+		<label for="email">Enter your email: </label>
+		<input type="email" class="form-control" name="email" placeholder="Email" required>
 		<label for="password">Enter your password: </label>
 		<input type="password" class="form-control" name="password" placeholder="Password" required>
 		<label for="repeat_password_input">Repeat your password: </label>
