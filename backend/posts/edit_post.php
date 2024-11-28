@@ -1,11 +1,11 @@
 <?php
-    include_once("../backend/posts/post_functions.php");
+    include_once(dirname(__DIR__) . "/posts/post_functions.php");
     $postId = $_GET['postId']; 
     $title = $_POST['post_title'];
     $content = $_POST['post_content'];
 
     if (!empty($title) && !empty($content)) {
-        $updateSuccess = updatePost($postId, $title, $content); 
+        $updateSuccess = update_post($postId, $title, $content); 
         if ($updateSuccess) {
             header("Location: profile.php");
             exit();

@@ -6,18 +6,18 @@ $postId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $userId = $_SESSION['id'];
 
 if ($postId > 0 && $userId > 0) {
-    $existingLike = checkUserLike($userId, $postId);
+    $existingLike = check_user_like($userId, $postId);
 
     if ($existingLike && count($existingLike) > 0) {
-        $result = getPostLikes($postId);
+        $result = get_post_likes($postId);
 
         if ($result && count($result) > 0) {
             $newLikes = $result[0]['likes'] - 1;
             
-            $updateResult = updatePostLikes($postId, $newLikes);
+            $updateResult = update_post_likes($postId, $newLikes);
 
             if ($updateResult) {
-                $removeLikeResult = removeUserLike($userId, $postId);
+                $removeLikeResult = remove_user_like($userId, $postId);
 
                 if ($removeLikeResult) {
                     echo json_encode([
